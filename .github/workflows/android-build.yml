@@ -12,7 +12,9 @@ permissions:
 
 jobs:
   build:
+    name: Build Mobile Connect APK
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -22,6 +24,15 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
+          cache: gradle
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android SDK 36
+        run: |
+          yes | sdkmanager --licenses >/dev/null || true
+          sdkmanager "platform-tools" "platforms;android-36" "build-tools;36.0.0"
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
@@ -29,19 +40,32 @@ jobs:
           gradle-version: '8.10.2'
 
       - name: Validate Android project
+        working-directory: android
         run: |
-          test -f android/settings.gradle.kts
-          test -f android/build.gradle.kts
-          test -f android/app/build.gradle.kts
-          test -f android/app/src/main/AndroidManifest.xml
+          test -f settings.gradle.kts
+          test -f build.gradle.kts
+          test -f app/build.gradle.kts
+          test -f app/src/main/AndroidManifest.xml
+          test -f app/src/main/java/com/mobileconnect/app/MainActivity.kt
+          echo "Android project files: OK"
+
+      - name: Check Gradle
+        working-directory: android
+        run: gradle --version
 
       - name: Build Debug APK
         working-directory: android
-        run: gradle :app:assembleDebug --stacktrace
+        run: gradle :app:assembleDebug --no-daemon --stacktrace
 
       - name: Run unit tests
         working-directory: android
-        run: gradle :app:test --stacktrace
+        run: gradle :app:testDebugUnitTest --no-daemon --stacktrace
+
+      - name: Verify APK
+        run: |
+          test -f android/app/build/outputs/apk/debug/app-debug.apk
+          test -s android/app/build/outputs/apk/debug/app-debug.apk
+          ls -lh android/app/build/outputs/apk/debug/app-debug.apk
 
       - name: Upload Debug APK
         uses: actions/upload-artifact@v4
@@ -61,12 +85,22 @@ jobs:
             echo "Run: $GITHUB_RUN_ID"
             echo "Date: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
             echo
-            echo '## Android'
+            echo '## Configuration'
             echo '- compileSdk: 36'
             echo '- targetSdk: 36'
             echo '- minSdk: 26'
             echo '- JDK: 17'
             echo '- Gradle: 8.10.2'
+            echo '- Android Build Tools: 36.0.0'
+            echo
+            echo '## APK'
+            if [ -f android/app/build/outputs/apk/debug/app-debug.apk ]; then
+              echo '- Status: BUILD SUCCESS'
+              echo '- Path: android/app/build/outputs/apk/debug/app-debug.apk'
+              echo "- Size: $(du -h android/app/build/outputs/apk/debug/app-debug.apk | cut -f1)"
+            else
+              echo '- Status: BUILD FAILED'
+            fi
           } > build-report/build-report.md
 
       - name: Upload build report
