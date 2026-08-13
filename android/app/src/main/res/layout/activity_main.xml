@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#080B10">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="22dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mobile Connect"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Your phone. Your PC. One connection."
+            android:textColor="#9BA6B5"
+            android:textSize="14sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:background="#141921"
+            android:orientation="vertical"
+            android:padding="18dp">
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="●  Disconnected"
+                android:textColor="#FF6464"
+                android:textSize="15sp" />
+            <EditText
+                android:id="@+id/pcIp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:hint="PC IP address"
+                android:singleLine="true"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#9BA6B5" />
+            <EditText
+                android:id="@+id/pairPin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="6-digit pairing PIN"
+                android:inputType="number"
+                android:singleLine="true"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#9BA6B5" />
+            <Button
+                android:id="@+id/connectButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="CONNECT &amp; PAIR" />
+        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:text="REMOTE CONTROL"
+            android:textColor="#9BA6B5"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+        <Button android:id="@+id/remoteButton" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="🖱  Remote Touchpad" />
+        <Button android:id="@+id/keyboardButton" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="⌨  Keyboard" />
+        <Button android:id="@+id/mediaButton" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="🎵  Media Control" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:text="CONNECTIVITY"
+            android:textColor="#9BA6B5"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+        <Button android:id="@+id/screenButton" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="📺  Screen Mirroring" />
+        <Button android:id="@+id/filesButton" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="📁  File Transfer" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:text="GAMING"
+            android:textColor="#9BA6B5"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+        <Button android:id="@+id/gameButton" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="🎮  Game Remote" />
+        <Button android:id="@+id/settingsButton" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="⚙  Settings" />
+    </LinearLayout>
+</ScrollView>
